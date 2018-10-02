@@ -5,6 +5,7 @@
 #define PORT 9000
 #define IPADDR "127.0.0.1"
 
+#define BUFSIZE 100
 main()
 {
 	int c_socket;
@@ -12,15 +13,17 @@ main()
 	int len;
 	int n;
 
-	char rcvBuffer[BUFSIZ];
-
+	char rcvBuffer[BUFSIZE];
+	char sendBuffer[BUFSIZE]="Hi I'm client";
 	c_socket = socket(PF_INET,SOCK_STREAM, 0);
 
 	memset(&c_addr, 0, sizeof(c_addr));
 	c_addr.sin_addr.s_addr = inet_addr(IPADDR);
 	c_addr.sin_family = AF_INET;
 	c_addr.sin_port = htons(PORT);
-
+	
+	write(c_socket, sendBuffer, strlen(sendBuffer));
+	
 	if(connect(c_socket, (struct sockaddr *) &c_addr, sizeof(c_addr))==-1){
 		printf("can not connect\n");
 		close(c_socket);
@@ -33,6 +36,7 @@ main()
 
 	rcvBuffer[n] = '\0';
 	printf("received Data : %s\n", rcvBuffer);
+	printf("received Data size :%d\n", strlen(rcvBuffer));
 
 	close(c_socket);
 }

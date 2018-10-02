@@ -4,7 +4,7 @@
 
 #define PORT 9000
 
-char buffer[BUFSIZ] = "hello, world";
+char buffer[BUFSIZ] = "hello, world I'm totoKr";
 
 main()
 {
@@ -33,10 +33,9 @@ main()
 	while(1){
 		len = sizeof(c_addr);
 		c_socket = accept(s_socket, (struct sockaddr *) &c_addr, &len);
-
+		printf("client connected\n");
 		n = strlen(buffer);
 		write(c_socket, buffer, n);
-
 		close(c_socket);
 	}
 	close(s_socket);
